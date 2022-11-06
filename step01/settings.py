@@ -12,5 +12,8 @@ GAME_SOUNDS = {}
 # Graphics
 GAME_TEXTURES = {}
 
+# Fonts
+GAME_FONTS = {}
+
 # Dictionary of pressed keys
 pressed_keys = {}
