@@ -13,6 +13,7 @@ class TileMap:
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
+        self.map = [[None for _ in range(cols)] for _ in range(rows)]
         self.tiles = [[None for _ in range(cols)] for _ in range(rows)]
 
         self.width = cols * settings.TILE_SIZE
