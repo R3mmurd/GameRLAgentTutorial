@@ -1,5 +1,9 @@
 import pygame
 
+from src.quad_utils import generate_quads
+
+ENVIRONMENT_PATH = 'environments/01.txt'
+
 # Size of our actual window
 WINDOW_WIDTH = 960
 WINDOW_HEIGHT = 800
@@ -7,6 +11,8 @@ WINDOW_HEIGHT = 800
 # Size we're trying to emulate
 VIRTUAL_WIDTH = 80
 VIRTUAL_HEIGHT = 96
+
+TILE_SIZE = 16
 
 pygame.mixer.init()
 
@@ -16,10 +22,15 @@ GAME_SOUNDS = {
 }
 
 # Graphics
-GAME_TEXTURES = {}
+GAME_TEXTURES = {
+    'background': pygame.image.load('graphics/background.png'),
+    'tiles': pygame.image.load('graphics/sheet.png'),
+}
 
 # Frames
-GAME_FRAMES = {}
+GAME_FRAMES = {
+    'tiles': generate_quads(GAME_TEXTURES['tiles'], TILE_SIZE, TILE_SIZE),
+}
 
 pygame.font.init()
 
