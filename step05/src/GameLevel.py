@@ -28,7 +28,7 @@ class GameLevel:
                     self.tile_map.tiles[i][j] = Tile(
                         x, y, tile_def['frame']
                     )
-                    self.tile_map.map[i][j] = int(row(j))
+                    self.tile_map.map[i][j] = int(row[j])
 
             player_row, player_col = f.readline().split(' ')
             player_row, player_col = int(player_row), int(player_col)
