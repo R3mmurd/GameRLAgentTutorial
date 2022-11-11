@@ -66,9 +66,11 @@ class GameLevel:
             self.finish = 'Lost'
     
     def _check_win(self, statue_1, statue_2):
-        s1 = TileMap.to_map(statue_1.x, statue_1.y)
-        s2 = TileMap.to_map(statue_2.x, statue_2.y)
-        return s1 == self.target_1 and s2 == self.target_2
+        s1 = statue_1.x, statue_1.y
+        s2 = statue_2.x, statue_2.y
+        t1 = TileMap.to_screen(*self.target_1)
+        t2 = TileMap.to_screen(*self.target_2)
+        return s1 == t1 and s2 == t2
 
     def check_win(self):
         if self._check_win(self.statue_1, self.statue_2) or self._check_win(self.statue_2, self.statue_1):
