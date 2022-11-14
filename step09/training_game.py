@@ -123,34 +123,6 @@ class TrainingGame:
             self.state = "Playing"
         elif self.state == "Finish":
             self.init()
-            
-    def can_go(self, i, j):
-        return i >= 0 and j >= 0 and i < self.rows and j < self.cols and not self.environment[i][j]
-
-    def can_move_up(self):
-        pi, pj = self.player
-        s1i, s1j = self.statue_1
-        s2i, s2j = self.statue_2
-        return self.can_go(pi - 1, pj) or self.can_go(s1i + 1, s1j) or self.can_go(s2i - 1, s2j)
-    
-    def can_move_down(self):
-        pi, pj = self.player
-        s1i, s1j = self.statue_1
-        s2i, s2j = self.statue_2
-        return self.can_go(pi + 1, pj) or self.can_go(s1i - 1, s1j) or self.can_go(s2i + 1, s2j)
-    
-    def can_move_right(self):
-        pi, pj = self.player
-        s1i, s1j = self.statue_1
-        s2i, s2j = self.statue_2
-        return self.can_go(pi, pj + 1) or self.can_go(s1i, s1j - 1) or self.can_go(s2i, s2j + 1)
-    
-    def can_move_left(self):
-        pi, pj = self.player
-        s1i, s1j = self.statue_1
-        s2i, s2j = self.statue_2
-        return self.can_go(pi, pj - 1) or self.can_go(s1i, s1j + 1) or self.can_go(s2i, s2j - 1)
-
 
     def get_state(self):
         if self.state in ("Playing", "Finish"):
@@ -162,16 +134,7 @@ class TrainingGame:
         if self.state == "Initial":
             return ('enter',)
         elif self.state == "Playing":
-            result = []
-            if self.can_move_up():
-                result.append('up')
-            if self.can_move_down():
-                result.append('down')
-            if self.can_move_right():
-                result.append('right')
-            if self.can_move_left():
-                result.append('left')
-            return tuple(result)
+            return ('up', 'right', 'left', 'down')
         else:
             return tuple()
 
