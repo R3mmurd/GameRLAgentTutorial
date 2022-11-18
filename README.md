@@ -4,6 +4,7 @@ Video games, besides being useful as entertainment tools, have the potential to 
 such as problems solving. On the other hand, Artificial Intelligence is a branch of Computer Science that looks for designing
 agents with the capability to imitate human cognitive skills. In this sense, video games can provide challenging and controlled
 environments that allow to test of the performance of traditional agents and stimulate the design of new agents.
+
 This tutorial includes an introduction to video game programming and agents that learn to play them based on the Reinforcement Learning framework.
 
 ## The game
