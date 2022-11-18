@@ -24,15 +24,15 @@ and the statues are not able to stand. The logic to solve this puzzle is the men
 
 This tutorial is developed in 9 steps.
 
-1- Game basic infrastructure and empty game states.
-2- Building the initial screen.
-3- Building the environment from a text file.
-4- Enities.
-5- Main character and its states.
-6- Input handling and animations.
-7- Statues and their movements according to the main character's movement.
-8- Finish state: Win or Lose
-9- Agent implementation and training game.
+1. Game basic infrastructure and empty game states.
+2. Building the initial screen.
+3. Building the environment from a text file.
+4. Entities.
+5. Main character and its states.
+6. Input handling and animations.
+7. Statues and their movements according to the main character's movement.
+8. Finish state: Win or Lose.
+9. Agent implementation and training game.
 
 ## Requirements
 
