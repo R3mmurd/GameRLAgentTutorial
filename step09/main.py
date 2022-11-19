@@ -1,15 +1,16 @@
 import sys
 import threading
 
-import settings
+from game import settings
 
-from training_game import TrainingGame
+from adapters import GraphicGameController, TrainingGameController
+from training_game.TrainingGame import TrainingGame
 
-from src.PuzzleGame import PuzzleGame
-from Agent import Agent
+from game.src.PuzzleGame import PuzzleGame
+from AI.PlayerAgent import PlayerAgent
 
-def run_agent(agent, game):
-    agent.play(game)
+def start_agent_play_game(agent, game, game_controller):
+    agent.play(game, game_controller)
 
 def get_new_game():
     return PuzzleGame(
@@ -22,12 +23,15 @@ def get_new_game():
 
 if __name__ == '__main__':
     n = 50 if len(sys.argv) < 2 else int(sys.argv[1])
-    agent = Agent(0.1, 0.9, 1)
-    agent.train(TrainingGame(), n)
+    agent = PlayerAgent(0.1, 0.9, 1)
+
+    training_game = TrainingGame()
+    agent.train(training_game, TrainingGameController(training_game), n)
 
     game = get_new_game()
-    agent_thread = threading.Thread(target=run_agent, args=(agent, game))
+    agent_thread = threading.Thread(target=start_agent_play_game, args=(agent, game, GraphicGameController(1.1)))
     agent_thread.start()
     game.exec()
     
     agent_thread.join()
+    
