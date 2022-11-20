@@ -35,11 +35,6 @@ class PuzzleGame(Game):
             self.quit()
         settings.pressed_keys[key] = True
 
-    def get_state(self):
-        return self.state_machine.get_state()
+    def get_state_info(self):
+        return self.state_machine.get_state_info()
 
-    def get_available_actions(self):
-        return self.state_machine.available_actions()
-    
-    def get_reward(self):
-        return self.state_machine.reward()

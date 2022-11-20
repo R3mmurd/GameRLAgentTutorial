@@ -3,34 +3,35 @@ from AI.QTableMixin import QTableMixin
 
 class PlayerAgent(QTableMixin, AgentMixin):
     
-    def __init__(self, alpha = 0.1, gamma = 0.9, epsilon = 0.1):
-        super().__init__(alpha, gamma, epsilon)
+    def __init__(self, get_state_function, get_available_actions_function, get_reward_function, alpha = 0.1, gamma = 0.9, epsilon = 0.1):
         self.game = None
         self.game_finished = False
         self.controller = None
-
-    def get_available_actions(self):
-        return self.game.get_available_actions()    
+        self._get_state = get_state_function
+        self._get_available_actions = get_available_actions_function
+        self._get_reward = get_reward_function
+        super().__init__(alpha, gamma, epsilon)
 
     def get_state(self):
-        state = self.game.get_state()
-        return state
+        return self._get_state(self.game)
+
+    def get_available_actions(self):
+        return self._get_available_actions(self.game)
+
+    def get_reward(self):
+        return self._get_reward(self.game)
 
     def take_action(self, action):
         self.controller.execute(action)
         return self.get_state()
 
     def learn(self, old_state, action, new_state):
-        reward = self.game.get_reward()
+        reward = self.get_reward()
 
-        if reward == 0:
-            reward = -1
-            
         self.update_q_value(old_state, action, reward, new_state)
 
-        if new_state[0] == 'Finish':
-            self.game_finished = True
-        
+        self.game_finished = new_state[0] == 'Finish' or not self.game.running
+             
         return reward
 
     def train(self, game, game_controller, num_iterations):

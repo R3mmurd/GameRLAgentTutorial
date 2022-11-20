@@ -16,6 +16,7 @@ class TrainingGame:
         self._load_environment()
         self.state = "Initial"
         self.finish_message = None
+        self.running = True
     
     def _load_environment(self):
         with open(settings.ENVIRONMENT_PATH, 'r') as f:
@@ -124,20 +125,14 @@ class TrainingGame:
         elif self.state == "Finish":
             self.init()
 
-    def get_state(self):
-        if self.state in ("Playing", "Finish"):
-            return (self.state, self.player, self.statue_1, self.statue_2, self.target_1, self.target_2)
-        else:
-            return (self.state, None, None, None, None, None)
-
-    def get_available_actions(self):
+    def get_state_info(self):
         if self.state == "Initial":
-            return ('enter',)
+            return (self.state, None, None, None, None)
         elif self.state == "Playing":
-            return ('up', 'right', 'left', 'down')
+            return (self.state, self.player, self.statue_1, self.statue_2, None)
         else:
-            return tuple()
-
+            return (self.state, None, None, None, self.finish_message)
+            
     def get_reward(self):
         if self.state in ("Initial", "Playing"):
             return 0

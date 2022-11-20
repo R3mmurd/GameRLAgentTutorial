@@ -16,14 +16,11 @@ class PlayingState(BaseGameState):
     def render(self, surface):
         self.level.render(surface)
 
-    def get_state(self):
+    def get_state_info(self):
         player_pos = TileMap.to_map(self.level.player.x, self.level.player.y)
         s1_pos = TileMap.to_map(self.level.statue_1.x, self.level.statue_1.y)
         s2_pos = TileMap.to_map(self.level.statue_2.x, self.level.statue_2.y)
-        return (str(self), player_pos, s1_pos, s2_pos, self.level.target_1, self.level.target_2)
-
-    def available_actions(self):
-        return ('up', 'right', 'left', 'down')
+        return (str(self), player_pos, s1_pos, s2_pos, None)
 
     def __str__(self):
         return 'Playing'

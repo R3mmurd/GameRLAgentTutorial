@@ -24,8 +24,5 @@ class InitialState(BaseGameState):
             (255, 255, 255), center=True
         )
     
-    def available_actions(self):
-        return ('enter',)
-
     def __str__(self):
         return 'Initial'

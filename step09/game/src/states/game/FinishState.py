@@ -42,8 +42,8 @@ class FinishState(BaseGameState):
             (255, 255, 255), center=True
         )
 
-    def reward(self):
-        return 1000 if self.finish_message == 'Won' else -100
-
+    def get_state_info(self):
+        return (str(self), None, None, None, self.finish_message)
+    
     def __str__(self):
         return 'Finish'
