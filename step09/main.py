@@ -1,3 +1,8 @@
+"""
+This program integrates the agent with the training game and
+the graphic game and the controller adapters to play them.
+"""
+
 import sys
 import threading
 
@@ -9,9 +14,20 @@ from training_game.TrainingGame import TrainingGame
 from game.src.PuzzleGame import PuzzleGame
 from AI.PlayerAgent import PlayerAgent
 
+
+"""
+Get the state information from the game
+
+This function will be used by the agent.
+"""
 def get_state(game):
     return game.get_state_info()
 
+"""
+Get the available actions from the game according to its state.
+
+This function will be used by the agent.
+"""
 def get_available_actions(game):
     state_name, _, _, _, _ = game.get_state_info()
     if state_name == "Initial":
@@ -21,6 +37,12 @@ def get_available_actions(game):
     else:
         return tuple()
 
+
+"""
+Get the reward from the game according to its state.
+
+This function will be used by the agent.
+"""
 def get_reward(game):
     state_name, _, _, _, message = game.get_state_info()
 
@@ -31,16 +53,10 @@ def get_reward(game):
     else:
         return 1000 if message == "Won" else -100
 
-def get_new_game():
-    return PuzzleGame(
-        title='Puzzle Game',
-        window_width=settings.WINDOW_WIDTH,
-        window_height=settings.WINDOW_HEIGHT,
-        virtual_width=settings.VIRTUAL_WIDTH,
-        virtual_height=settings.VIRTUAL_HEIGHT
-    )
 
-
+"""
+Train an agent to learn to play a game with a given controller.
+"""
 def train(agent, game, game_controller, num_iterations):
     agent.game = game
     agent.controller = game_controller
@@ -67,6 +83,10 @@ def train(agent, game, game_controller, num_iterations):
     print(f"Won: {won}")
     print(f"Lost: {lost}")
 
+
+"""
+The agent starts to play the game in explotation mode.
+"""
 def play(agent, game, game_controller):
     agent.game = game
     agent.controller = game_controller
@@ -76,9 +96,7 @@ def play(agent, game, game_controller):
     game_state = get_state(game)
     while game_state[0] != 'Finish' and game.running:
         _, _, game_state, _ = agent.step()
-        
-def start_agent_play_game(agent, game, game_controller):
-    play(agent, game, game_controller)
+
 
 if __name__ == '__main__':
     n = 50 if len(sys.argv) < 2 else int(sys.argv[1])
@@ -94,8 +112,14 @@ if __name__ == '__main__':
     training_game = TrainingGame()
     train(agent, training_game, TrainingGameController(training_game), n)
 
-    game = get_new_game()
-    agent_thread = threading.Thread(target=start_agent_play_game, args=(agent, game, GraphicGameController(1.1)))
+    game = PuzzleGame(
+        title='Puzzle Game',
+        window_width=settings.WINDOW_WIDTH,
+        window_height=settings.WINDOW_HEIGHT,
+        virtual_width=settings.VIRTUAL_WIDTH,
+        virtual_height=settings.VIRTUAL_HEIGHT
+    )
+    agent_thread = threading.Thread(target=play, args=(agent, game, GraphicGameController(1.1)))
     agent_thread.start()
     game.exec()
     agent_thread.join()
