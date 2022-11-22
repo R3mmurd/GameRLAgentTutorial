@@ -4,11 +4,11 @@ class TrainingGameController:
     def __init__(self, game):
         self.game = game
         self.actions = {
-            'enter': self.game.press_enter,
-            'up': self.game.move_up,
-            'right': self.game.move_right,
-            'down': self.game.move_down,
-            'left': self.game.move_left,
+            GameController.K_ENTER: self.game.press_enter,
+            GameController.K_UP: self.game.move_up,
+            GameController.K_RIGHT: self.game.move_right,
+            GameController.K_DOWN: self.game.move_down,
+            GameController.K_LEFT: self.game.move_left,
         }
     
     def execute(self, action):

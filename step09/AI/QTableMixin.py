@@ -37,13 +37,7 @@ class QTableMixin:
 
         return best_action
 
-    def update_q_value(self, current_state, current_action, reward, future_state):
-        old_value = self.get_value(current_state, current_action)
-        best_future_value = self._best_future_value(future_state)
-        new_value = old_value + self.alpha * (reward + self.gamma * best_future_value - old_value)
-        self.set_value(current_state, current_action, new_value)
-
-    def _best_future_value(self, future_state):
+    def best_future_value(self, future_state):
         available_actions = self.get_available_actions()
 
         if len(available_actions) == 0:

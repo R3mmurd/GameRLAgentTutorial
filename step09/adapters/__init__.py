@@ -1,4 +1,5 @@
+from adapters.GameController import GameController
 from adapters.GraphicGameController import GraphicGameController
 from adapters.TrainingGameController import TrainingGameController
 
-(GraphicGameController, TrainingGameController)
+(GameController, GraphicGameController, TrainingGameController)

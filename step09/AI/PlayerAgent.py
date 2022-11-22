@@ -2,7 +2,6 @@ from AI.AgentMixin import AgentMixin
 from AI.QTableMixin import QTableMixin
 
 class PlayerAgent(QTableMixin, AgentMixin):
-    
     def __init__(self, get_state_function, get_available_actions_function, get_reward_function, alpha = 0.1, gamma = 0.9, epsilon = 0.1):
         self.game = None
         self.game_finished = False
@@ -27,44 +26,11 @@ class PlayerAgent(QTableMixin, AgentMixin):
 
     def learn(self, old_state, action, new_state):
         reward = self.get_reward()
-
         self.update_q_value(old_state, action, reward, new_state)
-
-        self.game_finished = new_state[0] == 'Finish' or not self.game.running
-             
         return reward
-
-    def train(self, game, game_controller, num_iterations):
-        self.game = game
-        self.controller = game_controller
-        self.mode = self.MODE_EXPLORATION
-        lost = 0
-        won = 0
-        result = 0
-
-        for i in range(num_iterations):
-            print(f"Training game {i + 1}")
-            while not self.game_finished:
-                _, _, _, result = self.step()
-
-            if result < 0:
-                lost += 1
-            else:
-                won += 1
-
-            self.game_finished = False
-            self.controller.execute('enter')
-        
-        print(self.q)
-        print(f"Table size: {len(self.q)}")
-        print(f"Won: {won}")
-        print(f"Lost: {lost}")
-
-    def play(self, game, game_controller):
-        self.game = game
-        self.controller = game_controller
-        self.mode = self.MODE_EXPLOTATION
-        self.game_finished = False
-        print(f"Playing game")
-        while not self.game_finished:
-            self.step()
+    
+    def update_q_value(self, current_state, current_action, reward, future_state):
+        old_value = self.get_value(current_state, current_action)
+        best_future_value = self.best_future_value(future_state)
+        new_value = old_value + self.alpha * (reward + self.gamma * best_future_value - old_value)
+        self.set_value(current_state, current_action, new_value)
