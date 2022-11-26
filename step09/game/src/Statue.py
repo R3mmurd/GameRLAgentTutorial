@@ -1,3 +1,5 @@
+from typing import TypeVar
+
 from gale.timer import Timer
 
 from game import settings
@@ -7,7 +9,7 @@ from game.src.Entity import Entity
 from game.src.states.statue.ListeningToPlayerState import ListeningToPlayerState
 
 class Statue(Entity):
-    def __init__(self, x, y, game_level, action):
+    def __init__(self, x: int, y: int, game_level: TypeVar('GameLevel'), action: str) -> None:
         super().__init__(
             x, y, 
         
@@ -29,12 +31,12 @@ class Statue(Entity):
         self.off_set_i = 0
         self.off_set_j = 0
 
-    def undo_movement(self):
+    def undo_movement(self) -> None:
         self.off_set_i *= -1
         self.off_set_j *= -1
         self.move()
 
-    def move(self):
+    def move(self) -> None:
         i, j = TileMap.to_map(self.x, self.y)
         x, y = TileMap.to_screen(i + self.off_set_i, j + self.off_set_j)
 
@@ -53,28 +55,28 @@ class Statue(Entity):
             on_finish=arrive
         )
     
-    def move_right(self):
+    def move_right(self) -> None:
         i, j = TileMap.to_map(self.x, self.y)
         if j < self.tile_map.cols - 1 and self.tile_map.map[i][j + 1] != 0 and not self.tile_map.tiles[i][j + 1].busy:
             self.off_set_i = 0
             self.off_set_j = 1
             self.move()
 
-    def move_left(self):
+    def move_left(self) -> None:
         i, j = TileMap.to_map(self.x, self.y)
         if j > 0 and self.tile_map.map[i][j - 1] != 0 and not self.tile_map.tiles[i][j - 1].busy:
             self.off_set_i = 0
             self.off_set_j = -1
             self.move()
     
-    def move_up(self):
+    def move_up(self) -> None:
         i, j = TileMap.to_map(self.x, self.y)
         if i > 0 and self.tile_map.map[i - 1][j] != 0 and not self.tile_map.tiles[i - 1][j].busy:
             self.off_set_i = -1
             self.off_set_j = 0
             self.move()
 
-    def move_down(self):
+    def move_down(self) -> None:
         i, j = TileMap.to_map(self.x, self.y)
         if i < self.tile_map.rows - 1 and self.tile_map.map[i + 1][j] != 0 and not self.tile_map.tiles[i + 1][j].busy:
             self.off_set_i = 1
@@ -83,7 +85,7 @@ class Statue(Entity):
 
         
 
-    def on_player_movement(self, direction):
+    def on_player_movement(self, direction: str) -> None:
         if direction == 'right':
             if self.action == 'follow':
                 self.move_right()

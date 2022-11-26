@@ -1,3 +1,5 @@
+from typing import TypeVar
+
 from game import settings
 
 from game.src.Entity import Entity
@@ -5,7 +7,7 @@ from game.src.states.main_character import IdleState, WalkingState
 
 
 class MainCharacter(Entity):
-    def __init__(self, x, y, game_level):
+    def __init__(self, x: int, y: int, game_level: TypeVar('GameLevel')) -> None:
         super().__init__(
             x, y, 
             settings.PLAYER_WIDTH,

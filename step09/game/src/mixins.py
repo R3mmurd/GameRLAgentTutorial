@@ -1,9 +1,10 @@
 import pygame
+from pygame.surface import Surface
 
 from game import settings
 
 class DrawableMixin:
-    def render(self, surface):
+    def render(self, surface: Surface) -> None:
         texture = settings.GAME_TEXTURES[self.texture]
         frame = settings.GAME_FRAMES[self.texture][self.frame]
         image = pygame.Surface((frame.width, frame.height), pygame.SRCALPHA)

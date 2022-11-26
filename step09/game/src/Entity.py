@@ -1,11 +1,13 @@
+from typing import Dict, Callable, Any, TypeVar
+
 from gale.state_machine import StateMachine
 from gale.animation import Animation
 
 from game.src.mixins import DrawableMixin
 
 class Entity(DrawableMixin):
-    def __init__(self, x, y, width, height, texture, game_level,
-                 states = {}, animations = {}):
+    def __init__(self, x: int, y: int, width: int, height: int, texture: str, game_level: TypeVar('GameLevel'),
+                 states: Dict[str, Callable] = {}, animations: Dict[str, Any] = {}) -> None:
         self.x = x
         self.y = y
         self.width = width
@@ -20,19 +22,19 @@ class Entity(DrawableMixin):
         self.current_animation = None
         self._generate_animations(animations)
 
-    def update(self, dt):
+    def update(self, dt: float) -> None:
         self.state_machine.update(dt)
         self.current_animation.update(dt)
         self.frame = self.current_animation.get_current_frame()
 
-    def change_animation(self, animation_name):
+    def change_animation(self, animation_name: str) -> None:
         animation = self.animations.get(animation_name)
         if animation and animation != self.current_animation:
             self.current_animation = animation
             self.current_animation.reset()
             self.frame = self.current_animation.get_current_frame()
     
-    def _generate_animations(self, animations):
+    def _generate_animations(self, animations: Dict[str, Any]) -> None:
         for k, v in animations.items():
             animation = Animation(
                 v['frames'],

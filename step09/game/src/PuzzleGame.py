@@ -23,14 +23,14 @@ class PuzzleGame(Game):
         InputHandler.add_action(pygame.K_LEFT, MoveLeftAction())
         
 
-    def update(self, dt):
+    def update(self, dt: float) -> None:
         self.state_machine.update(dt)
         settings.pressed_keys = {}
 
     def render(self, surface):
         self.state_machine.render(surface)
 
-    def keydown(self, key):
+    def keydown(self, key: int) -> None:
         if key == pygame.K_ESCAPE:
             self.quit()
         settings.pressed_keys[key] = True

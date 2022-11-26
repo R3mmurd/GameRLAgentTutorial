@@ -1,6 +1,9 @@
-import pygame
+from typing import List
 
-def generate_quads(atlas, tile_width, tile_height):
+from pygame.surface import Surface
+from pygame.rect import Rect
+
+def generate_quads(atlas: Surface, tile_width: int, tile_height: int) -> List[Rect]:
     atlas_width, atlas_height = atlas.get_size()
 
     num_cols = atlas_width // tile_width
@@ -10,7 +13,7 @@ def generate_quads(atlas, tile_width, tile_height):
     for i in range(num_rows):
         for j in range(num_cols):
             spritesheet.append(
-                pygame.Rect(
+                Rect(
                     j * tile_width,
                     i * tile_height,
                     tile_width,

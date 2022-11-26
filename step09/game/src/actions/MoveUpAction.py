@@ -1,8 +1,9 @@
 from game.src.InputHandler import Action
 from game.src.Tilemap import TileMap
+from game.src.Entity import Entity
 
 class MoveUpAction(Action):
-    def execute(self, entity):
+    def execute(self, entity: Entity) -> None:
         tile_map = entity.tile_map
         i, j = TileMap.to_map(entity.x, entity.y)
         if i > 0 and tile_map.map[i - 1][j] != 0 and not tile_map.tiles[i - 1][j].busy:
