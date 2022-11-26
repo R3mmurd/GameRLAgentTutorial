@@ -6,6 +6,8 @@ the graphic game and the controller adapters to play them.
 import sys
 import threading
 
+from typing import Tuple, Optional, Union
+
 from game import settings
 
 from adapters import GameController, GraphicGameController, TrainingGameController
@@ -20,7 +22,7 @@ Get the state information from the game
 
 This function will be used by the agent.
 """
-def get_state(game):
+def get_state(game: Union[TrainingGame, PuzzleGame]) -> Tuple[str, Optional[Tuple[int, int]], Optional[Tuple[int, int]], Optional[Tuple[int, int]], Optional[str]]:
     return game.get_state_info()
 
 """
@@ -28,7 +30,7 @@ Get the available actions from the game according to its state.
 
 This function will be used by the agent.
 """
-def get_available_actions(game):
+def get_available_actions(game: Union[TrainingGame, PuzzleGame]) -> Tuple[str]:
     state_name, _, _, _, _ = game.get_state_info()
     if state_name == "Initial":
         return (GameController.K_ENTER,)
@@ -43,7 +45,7 @@ Get the reward from the game according to its state.
 
 This function will be used by the agent.
 """
-def get_reward(game):
+def get_reward(game: Union[TrainingGame, PuzzleGame]) -> float:
     state_name, _, _, _, message = game.get_state_info()
 
     if state_name == "Initial":
@@ -57,7 +59,7 @@ def get_reward(game):
 """
 Train an agent to learn to play a game with a given controller.
 """
-def train(agent, game, game_controller, num_iterations):
+def train(agent: PlayerAgent, game: Union[TrainingGame, PuzzleGame], game_controller: GameController, num_iterations: int) -> None:
     agent.game = game
     agent.controller = game_controller
     agent.mode = PlayerAgent.MODE_EXPLORATION
@@ -87,7 +89,7 @@ def train(agent, game, game_controller, num_iterations):
 """
 The agent starts to play the game in explotation mode.
 """
-def play(agent, game, game_controller):
+def play(agent: PlayerAgent, game: Union[TrainingGame, PuzzleGame], game_controller: GameController) -> None:
     agent.game = game
     agent.controller = game_controller
     agent.mode = PlayerAgent.MODE_EXPLOTATION

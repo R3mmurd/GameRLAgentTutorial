@@ -6,5 +6,5 @@ class GameController:
     K_DOWN = 'down'
     K_LEFT = 'left'
 
-    def execute(self, action):
+    def execute(self, action: str) -> None:
         raise NotImplementedError
