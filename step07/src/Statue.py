@@ -44,12 +44,7 @@ class Statue(Entity):
 
         Timer.tween(
             0.5,
-            {
-                self: {
-                    'x': x,
-                    'y': y
-                }
-            },
+            [(self, { 'x': x, 'y': y })],
             on_finish=arrive
         )
     

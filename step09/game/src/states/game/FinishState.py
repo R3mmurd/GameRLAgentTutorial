@@ -23,11 +23,7 @@ class FinishState(BaseGameState):
 
         Timer.tween(
             2,
-            {
-                self: {
-                    'alpha': 255
-                }
-            },
+            [(self, { 'alpha': 255 })],
             on_finish=fade_down_finish
         )
 

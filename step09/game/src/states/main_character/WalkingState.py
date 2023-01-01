@@ -25,11 +25,6 @@ class WalkingState(BaseState):
 
         Timer.tween(
             settings.movement_time,
-            {
-                self.character: {
-                    'x': target[0],
-                    'y': target[1]
-                }
-            },
+            [(self.character, { 'x': target[0], 'y': target[1] })],
             on_finish=arrive
         )
